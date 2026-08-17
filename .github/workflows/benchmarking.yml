@@ -1,0 +1,36 @@
+name: Quantum HPC Benchmarking Pipeline
+on: [push]
+
+jobs:
+  run-benchmarks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install PennyLane Dependency
+      run: |
+        python -m pip install --upgrade pip
+        pip install pennylane numpy
+
+    - name: Execute PennyLane Baseline
+      run: python scripts/pennylane_baseline.py
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Build and Run Java HPC ForkJoinPool Benchmark
+      run: |
+        mvn clean compile
+        MAVEN_OPTS="-Xmx4g" mvn exec:java
+        
