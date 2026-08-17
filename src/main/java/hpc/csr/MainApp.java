@@ -14,7 +14,7 @@ public class MainApp {
         System.out.println("Configuratie: " + numRows + " randuri x " + numCols + " coloane.");
         System.out.println("Total elemente nenule (NNZ) in matricea CSR: " + totalNnz);
 
-        System.gc(); // Solicitare curățare Heap
+        System.gc(); 
 
         double[] val = new double[(int) totalNnz];
         int[] colInd = new int[(int) totalNnz];
@@ -50,6 +50,7 @@ public class MainApp {
             System.out.println("\n------------------------------------------------");
             System.out.println("📊 REZULTAT BENCHMARK GITHUB ACTIONS (JDK 21):");
             System.out.printf("Timp total de executie: %.2f ms\n", durationMs);
+            // CORECTAT: Schimbat din y in y[0] pentru a extrage corect prima valoare numericala
             System.out.printf("Validare vector rezultat (Amplitudine i=0): %.6f\n", y[0]);
             System.out.println("------------------------------------------------");
 
